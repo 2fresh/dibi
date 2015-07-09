@@ -122,11 +122,12 @@ class DibiPostgreDriver extends DibiObject implements IDibiDriver, IDibiResultDr
 	public function query($sql)
 	{
 		$this->affectedRows = FALSE;
-		$res = @pg_query($this->connection, $sql); // intentionally @
+		pg_send_query($this->connection, $sql);
+		$res = pg_get_result($this->connection);
+		$err = pg_result_error($res);
 
-		if ($res === FALSE) {
-			throw new DibiDriverException(pg_last_error($this->connection), 0, $sql);
-
+		if ($err != FALSE) {
+			throw new DibiDriverException($err, pg_result_error_field($res, PGSQL_DIAG_SQLSTATE), $sql);
 		} elseif (is_resource($res)) {
 			$this->affectedRows = pg_affected_rows($res);
 			if (pg_num_fields($res)) {
