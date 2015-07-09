@@ -316,6 +316,12 @@ final class DibiTranslator extends DibiObject
 					$translator = new self($this->connection);
 					return $translator->translate($value);
 
+				case 'ai':
+					foreach ($value as $v) {
+						$vx[] = $this->formatValue($v, 'i');
+					}
+					return 'ARRAY[' . implode(', ', $vx) . ']::integer[]';
+
 				default:  // value, value, value - all with the same modifier
 					foreach ($value as $v) {
 						$vx[] = $this->formatValue($v, $modifier);
