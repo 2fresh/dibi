@@ -30,7 +30,7 @@ class DibiNetteExtension extends Nette\Config\CompilerExtension
 			? $config['profiler']
 			: !$container->parameters['productionMode'];
 
-		unset($config['profiler']);
+		// unset($config['profiler']);
 
 		if (isset($config['flags'])) {
 			$flags = 0;
@@ -43,6 +43,7 @@ class DibiNetteExtension extends Nette\Config\CompilerExtension
 		$connection = $container->addDefinition($this->prefix('connection'))
 			->setClass('DibiConnection', array($config));
 
+		/*
 		if ($useProfiler) {
 			$panel = $container->addDefinition($this->prefix('panel'))
 				->setClass('DibiNettePanel')
@@ -51,6 +52,7 @@ class DibiNetteExtension extends Nette\Config\CompilerExtension
 
 			$connection->addSetup('$service->onEvent[] = ?', array(array($panel, 'logEvent')));
 		}
+		*/
 	}
 
 }
