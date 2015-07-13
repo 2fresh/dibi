@@ -29,7 +29,7 @@ class DibiExtension22 extends Nette\DI\CompilerExtension
 			? $config['profiler']
 			: class_exists('Tracy\Debugger') && $container->parameters['debugMode'];
 
-		unset($config['profiler']);
+		// unset($config['profiler']);
 
 		if (isset($config['flags'])) {
 			$flags = 0;
@@ -43,11 +43,13 @@ class DibiExtension22 extends Nette\DI\CompilerExtension
 			->setClass('DibiConnection', array($config))
 			->setAutowired(isset($config['autowired']) ? $config['autowired'] : TRUE);
 
+		/*
 		if ($useProfiler) {
 			$panel = $container->addDefinition($this->prefix('panel'))
 				->setClass('Dibi\Bridges\Tracy\Panel');
 			$connection->addSetup(array($panel, 'register'), array($connection));
 		}
+		*/
 	}
 
 }
